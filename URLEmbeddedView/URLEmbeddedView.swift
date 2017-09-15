@@ -40,7 +40,8 @@ open class URLEmbeddedView: UIView {
     private var URL: Foundation.URL?
     private var uuidString: String?
     open let textProvider = AttributedTextProvider.shared
-    
+    open var placeholderImage: UIImage? = nil
+
     open var didTapHandler: ((URLEmbeddedView, Foundation.URL?) -> Void)?
     open var stopTaskWhenCancel = false {
         didSet {
@@ -409,8 +410,12 @@ open class URLEmbeddedView: UIView {
                         self?.layoutIfNeeded()
                     }
                 } else {
-                    self?.changeImageViewWidthConstrain(0)
-                    self?.imageView.image = nil
+                    if let placeholderImage = self?.placeholderImage {
+                        self?.imageView.image = placeholderImage
+                    } else {
+                        self?.changeImageViewWidthConstrain(0)
+                        self?.imageView.image = nil
+                    }
                 }
                 let host = URL.host ?? ""
                 self?.domainLabel.attributedText = self?.textProvider[.domain].attributedText(host)
