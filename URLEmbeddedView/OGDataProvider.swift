@@ -109,7 +109,7 @@ public final class OGDataProvider: NSObject {
                 return
             }
             guard let data = data,
-                  let html = Kanna.HTML(html: data, encoding: String.Encoding.utf8),
+                  let html = try? Kanna.HTML(html: data, encoding: String.Encoding.utf8),
                   let header = html.head else {
                 completion?(ogData, nil)
                 return
